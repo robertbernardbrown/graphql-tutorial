@@ -1,7 +1,12 @@
 const graphql = require('graphql');
 const _ = require('lodash');
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID } = graphql;
+const { GraphQLObjectType, 
+    GraphQLString, 
+    GraphQLSchema, 
+    GraphQLID,
+    GraphQLInt
+} = graphql;
 
 //dummy data
 var books = [
@@ -10,12 +15,27 @@ var books = [
     {name: 'book3', genre: 'comedy', id: '3'}
 ];
 
+var authors = [
+    {name: 'Patrick', age: 44, id:'1'},
+    {name: 'Terry', age: 39, id: '2'},
+    {name: 'Carrie', age: 22, id: '3'}
+]
+
 const BookType = new GraphQLObjectType({
     name: 'Book',
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         genre: { type: GraphQLString },
+    })
+});
+
+const AuthorType = new GraphQLObjectType({
+    name: 'Author',
+    fields: () => ({
+        id: { type: GraphQLID },
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt },
     })
 });
 
@@ -27,6 +47,13 @@ const RootQuery = new GraphQLObjectType({
             args: { id: { type: GraphQLID } },
             resolve(parents, args){
                 return _.find(books, { id: args.id });
+            }
+        },
+        author: {
+            type: AuthorType,
+            args: { id: { type: GraphQLID } },
+            resolve(parents, args){
+                return _.find(authors, { id: args.id })
             }
         }
     }
