@@ -9,7 +9,7 @@ const { GraphQLObjectType,
     GraphQLID,
     GraphQLInt,
     GraphQLList
-} = graphql;
+} = graphql; 
 
 const BookType = new GraphQLObjectType({
     name: 'Book',
