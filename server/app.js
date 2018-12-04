@@ -4,9 +4,12 @@ const schema = require('./schema/schema');
 const mongoose = require('mongoose');
 const user = 'bob123';
 const pw = 'Billybob123!'
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 mongoose.connect(`mongodb://${user}:${pw}@ds219191.mlab.com:19191/gqltutorial`);
 mongoose.connection.once('open', () => {
